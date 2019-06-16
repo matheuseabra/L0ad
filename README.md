@@ -41,6 +41,16 @@ Bechmarking https://www.nytimes.com/
 This might take a while...
 ```
 
+Simulate 100 network requests sent by 150 different concurrent users:
+
+```
+$ ./load 100 150 https://www.nytimes.com/
+
+Bechmarking https://www.nytimes.com/
+
+This might take a while...
+```
+
 Simulate 2700 network requests sent by 90 different concurrent users:
 
 ```
@@ -51,13 +61,11 @@ Bechmarking https://www.youtube.com/feed/trending
 This might take a while...
 ```
 
-It benchmarks `https://www.nytimes.com/` with a 1000 requests and a 100 concurrent users doing page hits.
-
-**Obs:** 
+**Obs:** Go easy with the number of requests and concurrency as it might make the host address to timeout. Start with low values, then slowly increase them and observe its results.
 
 ### Parameters
 
-Parameter | Description | Default
+Parameter | Description
 --- | ---
 Requests | Number of requests to perform for the benchmarking session.
 Concurrency | Number of multiple requests to perform at a time.
@@ -72,7 +80,7 @@ Currently, four metrics are being benchmarked:
 3. Average time per concurrent request (ms)
 4. Transfer Rate (Kbytes/sec)
 
-**Obs:** L0ad iterates 100 times for each metric so that it has a baseline for realistic traffic simuation. (This might be refactored soon)
+**Obs:** L0ad iterates 100 times for each metric so that it has a baseline for realistic traffic simuation. (This might be refactored soon).
 
 ### Dependencies
 
@@ -93,8 +101,7 @@ Currently, four metrics are being benchmarked:
 
 Contributions and feedback are welcomed. 
 
-The project is still in its early stage and there's a lot of room for improvement.
-. If you find one or just have any idea on how to make this tools better, please open an issue.
+The project is still in its early stage and there's a lot of room for improvement. If you find one or just have any idea on how to make this tools better, please open an issue.
 
 ### License
 
