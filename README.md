@@ -17,13 +17,13 @@ In order for L0ad to function properly, you need the following properly installe
 Within your project's `./bin` directory, run: 
 
 ```
-$ ./ab <requests> <concurrency> http[s]:/hostname[:port]/path
+$ ./load <requests> <concurrency> http[s]:/hostname[:port]/path
 ```
 
 Example: 
 
 ```
-$ ./ab 1000 100 https://www.nytimes.com/
+$ ./load 1000 100 https://www.nytimes.com/
 
 Bechmarking https://www.nytimes.com/
 
