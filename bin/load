@@ -34,11 +34,11 @@ function avg_num_req() {
     # Plot benchmark results in the chart
     gnuplot -e "set terminal png size 500,400; \
                 set style fill solid; \
-                set title 'REST'; \
+                set title '$HOST_ADDRESS'; \
                 set xlabel 'Time (seconds)'; \
                 set ylabel 'Average Number of Requests'; \
                 set output 'avg-number-requests.png'; \
-                plot 'average-number-requests.csv' with boxes"
+                plot '$RESULT_AVG_NUM_REQ' with boxes"
 }
 
 function average_time_request() {
@@ -79,7 +79,7 @@ function average_time_concurrent_request() {
     # Begins benchmarking
     for i in {1..100}
     do
-        ab -n ${NUM_REQ} -c ${NUM_CON} ${HOST_ADDRESS} > ${REPORT_FILE} 
+        ab -k -l -n ${NUM_REQ} -c ${NUM_CON} ${HOST_ADDRESS} > ${REPORT_FILE} 
         cat ${REPORT_FILE} | head -n 23 | tail -n 1 | sed 's/Transfer rate:/Transfer rate add:/' | awk '{print $4}' | tr -s "\n" "," >> ${RESULT_AVG_TIME_CONCURRENT_REQ}
         echo " " >> ${RESULT_AVG_TIME_CONCURRENT_REQ}
         sleep 3
