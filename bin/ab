@@ -1,0 +1,137 @@
+#!/bin/bash
+
+# AB Settings
+ITERATIONS=70
+TIMEOUT=60
+VERBOSITY=1
+
+# Ouput files
+REPORT_FILE="benchmark-report.txt"
+
+# Arguments
+NUM_REQ=$1 # Number of requests
+NUM_CON=$2 # Number of concurrent requests
+HOST_ADDRESS=$3 # Host Address/port/endpoint
+
+function avg_num_req() {
+
+    # Define result csv file
+    RESULT_AVG_NUM_REQ="average-number-requests.csv"
+    
+    cd ../results 
+    mkdir average-number-requests
+    cd ./average-number-requests
+    
+    # Begins benchmarking
+    for i in {1..100}
+    do
+        ab -n ${NUM_REQ} -c ${NUM_CON} ${HOST_ADDRESS} > ${REPORT_FILE} 
+        cat ${REPORT_FILE} | head -n 21 | tail -n 1 | sed 's/Transfer rate:/Transfer rate add:/' | awk '{print $4}' | tr -s "\n" "," >> ${RESULT_AVG_NUM_REQ}
+        echo " " >> ${RESULT_AVG_NUM_REQ}
+        sleep 3
+    done
+
+    # Plot benchmark results in the chart
+    gnuplot -e "set terminal png size 500,400; \
+                set style fill solid; \
+                set title 'REST'; \
+                set xlabel 'Time (seconds)'; \
+                set ylabel 'Average Number of Requests'; \
+                set output 'avg-number-requests.png'; \
+                plot 'average-number-requests.csv' with boxes"
+}
+
+function average_time_request() {
+
+    # Define result csv file
+    RESULT_AVG_TIME_REQ="average-time-request.csv"
+   
+    mkdir average-time-request
+    cd ./average-time-request
+    
+    # Begins benchmarking
+    for i in {1..100}
+    do
+        ab -n ${NUM_REQ} -c ${NUM_CON} ${HOST_ADDRESS} > ${REPORT_FILE} 
+        cat ${REPORT_FILE} | head -n 22 | tail -n 1 | sed 's/Transfer rate:/Transfer rate add:/' | awk '{print $4}' | tr -s "\n" "," >> ${RESULT_AVG_TIME_REQ}
+        echo " " >> ${RESULT_AVG_TIME_REQ}
+        sleep 3
+    done
+
+    # Plot benchmark results in the chart
+    gnuplot -e "set terminal png size 500,400; \
+                set style fill solid; \
+                set title 'REST'; \
+                set xlabel 'Time (miliseconds)'; \
+                set ylabel 'Average Time per Request'; \
+                set output 'avg-time-request.png'; \
+                plot 'average-time-request.csv' with boxes"
+}
+
+function average_time_concurrent_request() {
+
+    # Define result csv file
+    RESULT_AVG_TIME_CONCURRENT_REQ="average-time-concurrent-request.csv"
+   
+    mkdir average-time-concurrent-request
+    cd ./average-time-concurrent-request
+    
+    # Begins benchmarking
+    for i in {1..100}
+    do
+        ab -n ${NUM_REQ} -c ${NUM_CON} ${HOST_ADDRESS} > ${REPORT_FILE} 
+        cat ${REPORT_FILE} | head -n 23 | tail -n 1 | sed 's/Transfer rate:/Transfer rate add:/' | awk '{print $4}' | tr -s "\n" "," >> ${RESULT_AVG_TIME_CONCURRENT_REQ}
+        echo " " >> ${RESULT_AVG_TIME_CONCURRENT_REQ}
+        sleep 3
+    done
+
+    # Plot benchmark results in the chart
+    gnuplot -e "set terminal png size 500,400; \
+                set style fill solid; \
+                set title 'REST'; \
+                set xlabel 'Time (miliseconds)'; \
+                set ylabel 'Average Time per Concurrent Request'; \
+                set output 'avg-time-request.png'; \
+                plot 'average-time-concurrent-request.csv' with boxes"
+}
+
+function transfer_rate() {
+
+    # Define results file
+    RESULT_TRANSFER_RATE="transfer-rate.csv"
+   
+    mkdir transfer-rate
+    cd ./transfer-rate
+    
+    # Begins benchmarking
+    for i in {1..100}
+    do
+        ab -n ${NUM_REQ} -c ${NUM_CON} ${HOST_ADDRESS} > ${REPORT_FILE} 
+        cat ${REPORT_FILE} | head -n 24 | tail -n 1 | sed 's/Transfer rate:/Transfer rate add:/' | awk '{print $4}' | tr -s "\n" "," >> ${RESULT_TRANSFER_RATE}
+        echo " " >> ${RESULT_TRANSFER_RATE}
+        sleep 3
+    done
+
+    # Plot benchmark results in the chart
+    gnuplot -e "set terminal png size 500,400; \
+                set style fill solid; \
+                set title 'REST'; \
+                set xlabel 'Time (seconds)'; \
+                set ylabel 'Transfer Rate (Kbytes)'; \
+                set output 'transfer-rate.png'; \
+                plot 'transfer-rate.csv' with boxes"
+}
+
+# Main script execution
+echo "Bechmarking ${HOST_ADDRESS}"
+echo "This might take a while..."
+
+avg_num_req
+cd ..
+average_time_request
+cd ..
+average_time_concurrent_request
+cd ..
+transfer_rate
+
+echo "Bechmark complete."
