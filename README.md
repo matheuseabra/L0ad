@@ -1,77 +1,100 @@
 # L0ad 🏋
 
-L0ad is a simple toolkit for Load Testing HTTP Servers, it uses Bash for scripting, ApacheBench for benchmarking, CSV for serializing data and GNUplot for plotting benchmark data on bar charts. 
+L0ad is a simple toolkit for Load Testing HTTP servers. It uses Bash for scripting, Apache ab for benchmarking, CSV for data serialization and Gnuplot for plotting bar benchmarked data on bar charts. 
+
+**Tip:** take a look at the `/samples` folder to see a sample load test result and its reports.
 
 ## Quickstart
 
 ### Pre-requisites
 
-In order for L0ad to function properly, you need the following properly installed on your machine: 
+In order to L0ad work properly you need to have the following tools setup on your machine:
 
-- Bash
-- ApacheBench
-- GNUplot
-    
+- Git Bash
+- Apache ab - version 2.4
+- Gnuplot - version 5.2
+
+### Clone the repository
+
+```
+    git clone https://github.com/matheuseabra/L0ad.git
+    cd ./L0ad
+```
+
 ### Usage
 
-Within your project's `./bin` directory, run: 
+Under the `./bin` directory, run: 
 
 ```
 $ ./load <requests> <concurrency> http[s]:/hostname[:port]/path
 ```
 
-Example: 
+### Examples 
+
+Simulate 100 network requests sent by 10 different concurrent users:
 
 ```
-$ ./load 1000 100 https://www.nytimes.com/
+$ ./load 100 10 https://www.nytimes.com/
 
 Bechmarking https://www.nytimes.com/
 
 This might take a while...
 ```
 
-It benchmarks the New York Times website with a thousand requests and a hundred concurrent users.
+Simulate 2700 network requests sent by 90 different concurrent users:
 
-**Tip:** take a look at the `/samples` folder to see a sample load test result and its reports.
+```
+$ ./load 2700 90 https://www.youtube.com/feed/trending
+
+Bechmarking https://www.youtube.com/feed/trending
+
+This might take a while...
+```
+
+It benchmarks `https://www.nytimes.com/` with a 1000 requests and a 100 concurrent users doing page hits.
+
+**Obs:** 
 
 ### Parameters
 
-Parameter | Description
+Parameter | Description | Default
 --- | ---
 Requests | Number of requests to perform for the benchmarking session.
 Concurrency | Number of multiple requests to perform at a time.
-Host Address | Host Address URL used for ApacheBench. (It accepts custom ports and enpoints as well)
+Host Address | Host Address URL used for ApacheBench. (It accepts ports and enpoints).
 
-### Metrics tested
+### Metrics
 
-Currently, there are four metrics that are being benchmarked:
+Currently, four metrics are being benchmarked:
 
 1. Average number of requests (sec)
 2. Average time per request (ms)
 3. Average time per concurrent request (ms)
 4. Transfer Rate (Kbytes/sec)
 
-**Obs:** : L0ad iterates 100 times for each metric so that it has a baseline for realistic traffic emulation. (This will be refactored soon)
+**Obs:** L0ad iterates 100 times for each metric so that it has a baseline for realistic traffic simuation. (This might be refactored soon)
+
+### Dependencies
+
+- Git Bash
+- Apache ab - Apache HTTP server benchmarking tool
+- CSV
+- Gnuplot
 
 ### Roadmap
 
+0. DRYer script reuse 
+1. Isolate metrics tested into separate scripts
+2. Generate benchmark reports dynamically
+3. Support for more AB parameters
+4. Support for more gnuplot charts
+
+### Contributing / Feedback
+
+Contributions and feedback are welcomed. 
+
 The project is still in its early stage and there's a lot of room for improvement.
-
-1. DRYer script reuse 
-2. Divide metrics tested to separate scripts
-3. Generate benchmark reports dynamically
-4. Support for more AB parameters
-
-### Tools used
-
-- Bash
-- ApacheBench
-- CSV
-- GNUplot
-
-### Contributing
-
-Contributions are welcomed, please open a issue.
+. If you find one or just have any idea on how to make this tools better, please open an issue.
 
 ### License
 
