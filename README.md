@@ -1,6 +1,6 @@
 # L0ad 🏋
 
-L0ad is a simple toolkit for Load Testing HTTP Servers. It uses Bash for scripting, ApacheBench for benchmarking and GNUplot for plotting benchmark results in a simple bar chart.
+L0ad is a simple toolkit for Load Testing HTTP Servers, it uses Bash for scripting, ApacheBench for benchmarking, CSV for serializing data and GNUplot for plotting benchmark data on bar charts. 
 
 ## Quickstart
 
@@ -8,10 +8,10 @@ L0ad is a simple toolkit for Load Testing HTTP Servers. It uses Bash for scripti
 
 In order for L0ad to function properly, you need the following properly installed on your machine: 
 
-1. Bash
-2. ApacheBench
-3. GNUplot
-   
+- Bash
+- ApacheBench
+- GNUplot
+    
 ### Usage
 
 Within your project's `./bin` directory, run: 
@@ -66,6 +66,7 @@ The project is still in its early stage and there's a lot of room for improvemen
 
 - Bash
 - ApacheBench
+- CSV
 - GNUplot
 
 ### Contributing
